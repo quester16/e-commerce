@@ -1,0 +1,10 @@
+.cart{
+  position: absolute;
+  z-index: 12;
+  top: 50px;
+  right: 0;
+  
+  li{
+    cursor: pointer;
+  }
+}
