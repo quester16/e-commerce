@@ -31,7 +31,7 @@ const Filter = () => {
     return(
         <div className="filter">
             <Button variant='secondary' className='my-2' onClick={() => setIsOpen(state=>!state)}>
-                <img src="src/assets/filter.svg" alt="filter" style={{height:'40px'}}/>
+                <img src="/src/assets/filter.svg" alt="filter" style={{height:'40px'}}/>
             </Button>
             <CSSTransition
                 in={isOpen}

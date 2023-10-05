@@ -31,7 +31,7 @@ const Header = () => {
                         </Link>
                         <Nav.Item style={{cursor: 'pointer'}} onClick={() => setIsOpen(state => !state)}>
 
-                            <img src="src/assets/cart.svg" alt="cart" style={{width: '40px', height: '40px'}}/>
+                            <img src="/src/assets/cart.svg" alt="cart" style={{width: '40px', height: '40px'}}/>
                             {
                                 cardAmount.length && <Badge bg="secondary">{cardAmount.length}</Badge>
                             }

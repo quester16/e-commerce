@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSelector, createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
@@ -41,5 +41,14 @@ export const fetchProducts = createAsyncThunk(
         const request = await fetch(`https://fakestoreapi.com/${type}`)
         const data = await request.json()
         return data;
+    }
+)
+
+const filteredProducts = createSelector(
+    state => state.productSlice.products,
+    state => state.filterSlice.filter,
+    (products, filter) => {
+        if(filter === 'idle') return products
+        return products.filter(item => item.category === filter)
     }
 )

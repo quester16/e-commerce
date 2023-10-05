@@ -5,12 +5,12 @@ import Button from "react-bootstrap/Button";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {getCategory} from "./filterSlice.js";
+import {getCategory, getFilter} from "./filterSlice.js";
 
 const Category = () => {
 
-    const dispatch = useDispatch()
     const category = useSelector(state => state.filterSlice.category)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getCategory())
@@ -19,8 +19,8 @@ const Category = () => {
     const setCategory = (arr) => {
         return arr.map((item,i) => {
             return(
-                <Link key={i} to={'/products/'+item}>
-                    <Button variant="secondary" className="mx-2">{item}</Button>
+                <Link key={i} to={'/products/'} >
+                    <Button variant="secondary" className="m-2" onClick={() => dispatch(getFilter(item))}>{item}</Button>
                 </Link>
             )
         })

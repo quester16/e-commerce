@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
-    filter: [],
+    filter: 'idle',
     category: [],
     categoryLoadingStatus: 'idle'
 }
@@ -10,7 +10,11 @@ const initialState = {
 const filterSlice = createSlice({
     name: 'filter',
     initialState,
-    reducers:{},
+    reducers:{
+        getFilter: (state, action) => {
+            state.filter = action.payload
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(getCategory.pending, state => {
@@ -27,6 +31,7 @@ const filterSlice = createSlice({
 })
 
 export default filterSlice.reducer;
+export const {getFilter} = filterSlice.actions
 
 export const getCategory = createAsyncThunk(
     'filters/getCategory',

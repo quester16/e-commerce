@@ -7,4 +7,12 @@
   li{
     cursor: pointer;
   }
+  
+  
+} 
+@media (max-width: 770px) {
+  .cart{
+    top: 160px;
+    //right: 0;
+  }
 }
