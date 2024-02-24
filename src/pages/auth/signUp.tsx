@@ -1,69 +1,14 @@
-import { FC, SyntheticEvent, useRef } from "react";
-import { auth } from "../../firebase/firebase.ts";
-import { Link } from "react-router-dom";
+import { FC, ReactNode } from "react";
+import withAuth from "../../components/hoc/withAuth.tsx";
 
-const SignUp: FC = () => {
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-  const onSubmit = async (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-    e.preventDefault();
-    try {
-      if (emailRef.current && passwordRef.current) {
-        await auth.createUserWithEmailAndPassword(
-          emailRef.current.value,
-          passwordRef.current.value,
-        );
-        console.log("Пользователь успешно зарегистрирован!");
-      }
-    } catch (error) {
-      console.error("Ошибка входа:", error);
-    }
-  };
+interface SignUpProps {
+  elements: ReactNode;
+}
 
-  return (
-    <>
-      <div className="login-wrapper w-[400px] h-fit rounded-xl bg-gray-100 p-4 mx-auto">
-        <h2 className="text-lg font-semibold text-center mb-5">
-          Зарегистрироваться
-        </h2>
-        <form onSubmit={onSubmit}>
-          <div className="email login">
-            <label className="label" htmlFor="email">
-              Почта
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              ref={emailRef}
-              required
-            />
-          </div>
-          <div className="password login ">
-            <label className="label" htmlFor="password">
-              Пароль
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              ref={passwordRef}
-              required
-            />
-          </div>
-          <button type="submit" className=" btn " style={{ width: "100%" }}>
-            Регистрация
-          </button>
-        </form>
-        <div className="text-center">
-          Уже есть аккаунт тогда{" "}
-          <Link to="/login" className="link underline">
-            Войдите
-          </Link>
-        </div>
-      </div>
-    </>
-  );
+const SignUp: FC<SignUpProps> = ({ elements }) => {
+  return <>{elements}</>;
 };
 
-export default SignUp;
+const signUP = withAuth(SignUp, "signUp");
+
+export default signUP;

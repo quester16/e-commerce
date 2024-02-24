@@ -1,8 +1,8 @@
 import React, { ComponentType, JSX, SyntheticEvent, useRef } from "react";
 import { auth } from "../../firebase/firebase.ts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/typedReduxHooks.ts";
-import { IUser, setUser } from "../../store/slices/authSlice.ts";
+import { setUser } from "../../store/slices/authSlice.ts";
 
 interface myProps {
   elements: JSX.Element;
@@ -24,21 +24,18 @@ const withAuth = <P extends myProps>(
       e.preventDefault();
       try {
         if (emailRef.current && passwordRef.current) {
-          const userCredential = await auth
-            .signInWithEmailAndPassword(
-              emailRef.current?.value,
-              passwordRef.current?.value,
-            )
-            .then(function (user: IUser) {
-              dispatch(
-                setUser({
-                  email: user.email,
-                  token: user.accessToken,
-                  id: user.id,
-                }),
-              );
-            });
+          const userCredential = await auth.signInWithEmailAndPassword(
+            emailRef.current?.value,
+            passwordRef.current?.value,
+          );
           const user = userCredential.user;
+          dispatch(
+            setUser({
+              email: user?.email,
+              token: user?.refreshToken,
+              id: user?.uid,
+            }),
+          );
           console.log("Пользователь вошел в систему:", user?.email);
           navigate("/");
         }
@@ -52,17 +49,51 @@ const withAuth = <P extends myProps>(
     ) => {
       e.preventDefault();
       try {
-        if (emailRef.current && passwordRef.current) {
+        if (
+          emailRef.current &&
+          passwordRef.current &&
+          passwordRef.current?.value === passwordConfirmRef.current?.value
+        ) {
           await auth.createUserWithEmailAndPassword(
             emailRef.current?.value,
             passwordRef.current?.value,
           );
+          const user = auth.currentUser;
+          dispatch(
+            setUser({
+              email: user?.email,
+              token: user?.refreshToken,
+              id: user?.uid,
+            }),
+          );
           console.log("Пользователь успешно зарегистрирован!");
+          navigate("/");
         }
         // Перенаправление на главную страницу
       } catch (error) {
         console.error("Ошибка регистрации:", error);
       }
+    };
+
+    const renderLink = (type: string) => {
+      if (type === "login") {
+        return (
+          <>
+            <p> Don't have an account? </p>
+            <Link to={"/signUp"} className="link underline">
+              Register
+            </Link>
+          </>
+        );
+      }
+      return (
+        <>
+          <p> If you have an account </p>
+          <Link to={"/login"} className="link underline">
+            Login
+          </Link>
+        </>
+      );
     };
 
     const jsx = () => {
@@ -97,7 +128,7 @@ const withAuth = <P extends myProps>(
                   required
                 />
               </div>
-              {type === "signup" && (
+              {type !== "login" && (
                 <div className="password-confirm login">
                   <label className="label" htmlFor="password-confirm">
                     Подтвердите пароль
@@ -115,6 +146,9 @@ const withAuth = <P extends myProps>(
                 Регистрация
               </button>
             </form>
+            <div className="mt-3 text-center">
+              {type === "login" ? renderLink("login") : renderLink("signUp")}
+            </div>
           </div>
         </>
       );
