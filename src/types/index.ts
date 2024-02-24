@@ -1,7 +1,7 @@
 export interface CardProps {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   price: number;
-  images: (number | string)[];
+  images: string[];
 }

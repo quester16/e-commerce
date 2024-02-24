@@ -1,10 +1,10 @@
 import { FC, SyntheticEvent, useRef } from "react";
-import { auth } from "../firebase/firebase.ts";
+import { auth } from "../../firebase/firebase.ts";
+import { Link } from "react-router-dom";
 
-const Login: FC = () => {
+const SignUp: FC = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
   const onSubmit = async (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     e.preventDefault();
     try {
@@ -51,25 +51,19 @@ const Login: FC = () => {
               required
             />
           </div>
-          <div className="password-confirm login">
-            <label className="label" htmlFor="password-confirm">
-              Подтвердите пароль
-            </label>
-            <input
-              type="password"
-              name="password-confirm"
-              id="password-confirm"
-              ref={passwordConfirmRef}
-              required
-            />
-          </div>
           <button type="submit" className=" btn " style={{ width: "100%" }}>
             Регистрация
           </button>
         </form>
+        <div className="text-center">
+          Уже есть аккаунт тогда{" "}
+          <Link to="/login" className="link underline">
+            Войдите
+          </Link>
+        </div>
       </div>
     </>
   );
 };
 
-export default Login;
+export default SignUp;

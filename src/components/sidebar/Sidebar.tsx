@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const Sidebar: FC = () => {
   return (
-    <div className="w-[300px] h-full mr-[50px]">
+    <div className="w-[230px] h-full mr-[50px]">
       <div className="cost-filter filter">
         <label htmlFor="cost" className="label">
           Укажите цену до

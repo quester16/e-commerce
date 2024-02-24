@@ -1,13 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: { isAuth: boolean } = {
-  isAuth: false,
+export interface IUser {
+  email: string | null;
+  accessToken: string | null;
+  id: string | null;
+}
+
+const initialState: IUser = {
+  email: null,
+  token: null,
+  id: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.accessToken = action.payload.token;
+      state.email = action.payload.email;
+      state.id = action.payload.id;
+    },
+    removeUser: (state) => {
+      state.accessToken = null;
+      state.email = null;
+      state.id = null;
+    },
+  },
 });
 
+export const { setUser, removeUser } = authSlice.actions;
 export default authSlice.reducer;

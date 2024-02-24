@@ -37,10 +37,10 @@ export default productSlice.reducer;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
+  async (limit: number) => {
     try {
       const response = await axios.get(
-        "https://api.escuelajs.co/api/v1/products?limit=40&offset=0",
+        `https://api.escuelajs.co/api/v1/products?limit=${limit}&offset=0`,
       );
       return response.data;
     } catch (e) {

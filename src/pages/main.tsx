@@ -7,20 +7,19 @@ const Main: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(20));
   }, [dispatch]);
 
   const products = useAppSelector((state) => state.products.products);
 
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap w-[1000px] gap-3">
       {products.map((item, i) => {
         return (
           <Card
             key={i}
             id={item.id}
             title={item.title}
-            description={item.description}
             price={item.price}
             images={item.images}
           />

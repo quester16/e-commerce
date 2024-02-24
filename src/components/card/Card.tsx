@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { CardProps } from "../../types";
 
-const Card: FC<CardProps> = () => {
+const Card: FC<CardProps> = (props) => {
+  const { title, images, price } = props;
   return (
-    <div className="relative w-[220px] h-[400px] bg-blue-400 rounded-md">
+    <div className="relative w-[233px] h-[400px] bg-blue-100 rounded-md">
       <div className="badge-like absolute top-3 right-2 ">
         <svg
           className="w-6 h-6 text-gray-800 dark:text-white"
@@ -21,9 +22,11 @@ const Card: FC<CardProps> = () => {
           />
         </svg>
       </div>
-      <div className="img w-full h-[290px]"></div>
-      <div className="title"></div>
-      <div className="cost"></div>
+      <div className="img w-full h-[290px] rounded-t-md">
+        <img src={images[0]} alt={title} />
+      </div>
+      <div className="title">{title}</div>
+      <div className="cost">{price}</div>
       <div className="badge-toCart"></div>
     </div>
   );
