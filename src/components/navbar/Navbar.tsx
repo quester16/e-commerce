@@ -1,22 +1,31 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.ts";
 
 const Navbar: FC = () => {
+  const { isAuth } = useAuth();
+
   return (
-    <header className="flex align-middle justify-between h-[150px] p-2">
-      <div className="text-4xl text-blue-500 mr-14 flex items-center">logo</div>
+    <header className="flex align-middle justify-between h-[150px]">
+      <div className="text-4xl text-blue-500 flex items-center">logo</div>
       <nav className="flex items-center">
-        <ul className="flex">
+        <ul className="flex min-w-[200px] font-semibold tracking-wide">
           <li className="link mr-[20px]">
-            <Link to={"/"}>Home</Link>
+            <Link to={"/"}>Главная</Link>
           </li>
-          <li className="link">
-            <Link to={"/products"}>Products</Link>
+          <li className="link mr-[20px]">
+            <Link to={"/favorite"}>Избранное</Link>
           </li>
         </ul>
-        <button className="btn ml-32">
-          <Link to={"/login"}>Login</Link>
-        </button>
+        {isAuth ? (
+          <Link to={"/profile"} className="w-fit">
+            <button className="btn ">Профиль</button>
+          </Link>
+        ) : (
+          <Link to={"/login"} className="w-fit">
+            <button className="btn ">Войти</button>
+          </Link>
+        )}
       </nav>
     </header>
   );

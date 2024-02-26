@@ -1,14 +1,14 @@
-import { FC, ReactNode } from "react";
+import { JSX } from "react";
 import withAuth from "../../components/hoc/withAuth.tsx";
 
 interface SignUpProps {
-  elements: ReactNode;
+  elements?: JSX.Element;
 }
 
-const SignUp: FC<SignUpProps> = ({ elements }) => {
+const signUp = ({ elements }: SignUpProps) => {
   return <>{elements}</>;
 };
 
-const signUP = withAuth(SignUp, "signUp");
+const SignUp = withAuth(signUp, "signUp");
 
-export default signUP;
+export default SignUp;

@@ -1,18 +1,14 @@
-import React, { ComponentType, JSX, SyntheticEvent, useRef } from "react";
+import React, { ComponentType, SyntheticEvent, useRef } from "react";
 import { auth } from "../../firebase/firebase.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/typedReduxHooks.ts";
 import { setUser } from "../../store/slices/authSlice.ts";
 
-interface myProps {
-  elements: JSX.Element;
-}
-
-const withAuth = <P extends myProps>(
+const withAuth = <P extends object>(
   WrappedComponent: ComponentType<P>,
   type: string,
 ) => {
-  const WithAuth: React.FC<P> = () => {
+  const WithAuth: React.FC<P> = (props) => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
@@ -101,7 +97,7 @@ const withAuth = <P extends myProps>(
         <>
           <div className="login-wrapper w-[400px] h-fit rounded-xl bg-gray-100 p-4 mx-auto">
             <h2 className="text-lg font-semibold text-center mb-5">
-              Зарегистрироваться
+              {type === "login" ? "Войти" : "Зарегистрироваться"}
             </h2>
             <form onSubmit={type === "login" ? onLogin : onSignUp}>
               <div className="email login">
@@ -143,7 +139,7 @@ const withAuth = <P extends myProps>(
                 </div>
               )}
               <button type="submit" className=" btn " style={{ width: "100%" }}>
-                Регистрация
+                {type === "login" ? "Войти" : "Регистрация"}
               </button>
             </form>
             <div className="mt-3 text-center">
@@ -156,7 +152,7 @@ const withAuth = <P extends myProps>(
 
     const elements = jsx();
 
-    return <WrappedComponent elements={elements} />;
+    return <WrappedComponent {...props} elements={elements} />;
   };
 
   return WithAuth;

@@ -1,16 +1,26 @@
-import { FC } from "react";
+import React, { FC, useState } from "react";
 import { CardProps } from "../../types";
+import cartIcon from "../../assets/cartIcon.svg";
 
 const Card: FC<CardProps> = (props) => {
-  const { title, images, price } = props;
+  const { title, image, price } = props;
+  const [like, setLike] = useState(false);
+
+  const shortenTitle = (title: string) => {
+    return title.length > 35 ? title.substring(0, 35) + "..." : title;
+  };
+
   return (
     <div className="relative w-[233px] h-[400px] bg-blue-100 rounded-md">
-      <div className="badge-like absolute top-3 right-2 ">
+      <div
+        className="badge-like absolute top-1 right-2 z-20 cursor-pointer"
+        onClick={() => setLike((prevState) => !prevState)}
+      >
         <svg
-          className="w-6 h-6 text-gray-800 dark:text-white"
+          className="w-6 h-6 text-red-500 cart"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          fill={like ? "red" : "none"}
           viewBox="0 0 24 24"
         >
           <path
@@ -22,12 +32,16 @@ const Card: FC<CardProps> = (props) => {
           />
         </svg>
       </div>
-      <div className="img w-full h-[290px] rounded-t-md">
-        <img src={images[0]} alt={title} />
+      <div className="img w-full h-[290px] rounded-t-md pt-6">
+        <img src={image} alt={title} />
       </div>
-      <div className="title">{title}</div>
-      <div className="cost">{price}</div>
-      <div className="badge-toCart"></div>
+      <div className="title font-normal h-12 p-1">{shortenTitle(title)}</div>
+      <div className="flex justify-between items-center p-1">
+        <div className="cost font-semibold underline mt-2">{price}$</div>
+        <div className="badge-toCart w-8 h-8 rounded-md cursor-pointer bg-blue-300 hover:bg-blue-400 transition-colors ease-in">
+          <img src={cartIcon} alt="cartIcon" />
+        </div>
+      </div>
     </div>
   );
 };

@@ -3,5 +3,5 @@ export interface CardProps {
   title: string;
   description?: string;
   price: number;
-  images: string[];
+  image: string;
 }
