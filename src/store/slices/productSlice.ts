@@ -6,18 +6,34 @@ interface productState {
   loading: boolean;
   error: boolean;
   products: CardProps[];
+  toCart: [];
+  favorites: number[];
 }
 
 const initialState: productState = {
   loading: false,
   error: false,
   products: [],
+  toCart: [],
+  favorites: [],
 };
 
 const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    addFavorites: (state, action) => {
+      state.favorites.push(action.payload);
+      state.favorites = state.favorites.filter(
+        (item, i, arr) => i === arr.indexOf(item),
+      );
+    },
+    removeFavorite: (state, action) => {
+      state.favorites = state.favorites.filter(
+        (item) => item !== action.payload,
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -34,6 +50,7 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
+export const { addFavorites, removeFavorite } = productSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
