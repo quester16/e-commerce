@@ -12,6 +12,9 @@ import Favorite from "./pages/Favorite.tsx";
 const App: FC = () => {
   useEffect(() => {}, []);
 
+  // todo: complete favorite page and cart page
+  // todo: make database for authed users, for favorite and cart state
+
   return (
     <>
       <Navbar />

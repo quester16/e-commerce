@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { CardProps } from "../../types";
 import cartIcon from "../../assets/cartIcon.svg";
 
@@ -13,11 +13,11 @@ const Card: FC<CardProps> = (props) => {
   return (
     <div className="relative w-[233px] h-[400px] bg-blue-100 rounded-md">
       <div
-        className="badge-like absolute top-1 right-2 z-20 cursor-pointer"
+        className="badge-like absolute top-0 right-2 z-20 cursor-pointer"
         onClick={() => setLike((prevState) => !prevState)}
       >
         <svg
-          className="w-6 h-6 text-red-500 cart"
+          className="w-6 h-6 text-red-500 cart hover:text-red-300 transition-colors"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill={like ? "red" : "none"}
