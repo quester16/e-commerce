@@ -7,7 +7,7 @@ interface productState {
   error: boolean;
   products: CardProps[];
   toCart: [];
-  favorites: number[];
+  favorites: CardProps[];
 }
 
 const initialState: productState = {
@@ -25,12 +25,12 @@ const productSlice = createSlice({
     addFavorites: (state, action) => {
       state.favorites.push(action.payload);
       state.favorites = state.favorites.filter(
-        (item, i, arr) => i === arr.indexOf(item),
+        (item, i, arr) => arr.findIndex((p) => p.id === item.id) === i,
       );
     },
     removeFavorite: (state, action) => {
       state.favorites = state.favorites.filter(
-        (item) => item !== action.payload,
+        (item) => item.id !== action.payload,
       );
     },
   },
@@ -38,13 +38,16 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true;
+        state.error = false;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.products = action.payload;
         state.loading = false;
+        state.error = false;
+        state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state) => {
         state.error = true;
+        state.loading = false;
       });
   },
 });

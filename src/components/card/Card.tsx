@@ -19,7 +19,7 @@ const Card: FC<CardProps> = (props) => {
     setLike((prevState) => {
       prevState = !prevState;
       prevState
-        ? dispatch(addFavorites(props.id))
+        ? dispatch(addFavorites(props))
         : dispatch(removeFavorite(props.id));
       return prevState;
     });
