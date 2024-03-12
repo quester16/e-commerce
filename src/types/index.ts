@@ -6,6 +6,7 @@ export interface CardProps {
   image: string;
   category?: string;
 }
+
 export type elements = {
   cost?: {
     value: string;

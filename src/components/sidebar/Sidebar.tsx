@@ -41,9 +41,13 @@ const View = ({ onChange, categories }: ViewProps) => {
       <form action="#" onSubmit={onChange}>
         <div className="cost-filter filter">
           <label htmlFor="cost" className="label">
-            Укажите цену до
+            Сортировать по цене
           </label>
-          <input type="number" name="cost" id="cost" />
+          <select name="price" id="price" className="rounded-t-md p-1">
+            <option value="default">По умолчанию</option>
+            <option value="lower">Цена по убыванию</option>
+            <option value="higher">Цена по возрастанию</option>
+          </select>
         </div>
 
         <div className="options filter">
@@ -51,6 +55,8 @@ const View = ({ onChange, categories }: ViewProps) => {
             Выберите категорию
           </label>
           <select name="category" id="category" className="rounded-t-md p-1">
+            <option value="default">По умолчанию</option>
+
             {categories.map((item, i) => {
               return (
                 <option key={i} value={item}>

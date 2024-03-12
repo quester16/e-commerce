@@ -1,19 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { elements } from "../../types";
 
 interface initialStateProps {
   loading: boolean;
   error: boolean;
   categories: [];
-  selectedFilters: elements;
+  selectedFilter: {
+    cost: string;
+    category: string;
+  };
 }
 
 const initialState: initialStateProps = {
   loading: false,
   error: false,
   categories: [],
-  selectedFilters: {},
+  selectedFilter: {
+    cost: "",
+    category: "",
+  },
 };
 
 const filterSlice = createSlice({
@@ -21,7 +26,7 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     getFilter: (state, action) => {
-      state.selectedFilters = action.payload;
+      state.selectedFilter = action.payload;
     },
   },
   extraReducers: (builder) => {
