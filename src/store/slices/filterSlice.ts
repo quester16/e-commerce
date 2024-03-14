@@ -6,7 +6,7 @@ interface initialStateProps {
   error: boolean;
   categories: [];
   selectedFilter: {
-    cost: string;
+    price: string;
     category: string;
   };
 }
@@ -16,7 +16,7 @@ const initialState: initialStateProps = {
   error: false,
   categories: [],
   selectedFilter: {
-    cost: "",
+    price: "",
     category: "",
   },
 };
@@ -26,6 +26,9 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     getFilter: (state, action) => {
+      state.selectedFilter = action.payload;
+    },
+    toDefault: (state, action) => {
       state.selectedFilter = action.payload;
     },
   },
@@ -48,7 +51,7 @@ const filterSlice = createSlice({
 });
 
 export default filterSlice.reducer;
-export const { getFilter } = filterSlice.actions;
+export const { getFilter, toDefault } = filterSlice.actions;
 
 export const fetchCategoriesThunk = createAsyncThunk(
   "filter/fetchCategories",

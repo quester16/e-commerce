@@ -1,8 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC, FormEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
 import {
   fetchCategoriesThunk,
   getFilter,
+  toDefault,
 } from "../../store/slices/filterSlice.ts";
 import { elements } from "../../types";
 
@@ -11,34 +12,50 @@ const Sidebar: FC = () => {
   const categories = useAppSelector((state) => state.filter.categories);
   useEffect(() => {
     dispatch(fetchCategoriesThunk());
+    console.log("render");
   }, [dispatch]);
 
-  const onChange = (e: HTMLFormElement) => {
+  const onChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target: elements & string = e.target;
+
+    const target: EventTarget & elements = e.target;
+
     const elements = {
-      cost: target.cost?.value,
+      price: target.price?.value,
       category: target.category?.value,
     };
     dispatch(getFilter(elements));
   };
+  const onReset = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  return <View onChange={onChange} categories={categories} />;
+    // const target: EventTarget & elements = e.target;
+
+    const elements = {
+      price: "default",
+      category: "default",
+    };
+
+    dispatch(toDefault(elements));
+  };
+
+  return <View onChange={onChange} onReset={onReset} categories={categories} />;
 };
 
 export default Sidebar;
 
 interface ViewProps {
-  onChange: (e: HTMLFormElement) => void;
+  onChange: (e: FormEvent<HTMLFormElement>) => void;
+  onReset: (e: FormEvent<HTMLFormElement>) => void;
   categories: string[];
 }
-const View = ({ onChange, categories }: ViewProps) => {
+const View = ({ onChange, categories, onReset }: ViewProps) => {
   return (
     <div
       className="w-[230px] h-full mr-[50px]"
       style={{ position: "sticky", top: 10 }}
     >
-      <form action="#" onSubmit={onChange}>
+      <form action="#" onSubmit={onChange} onReset={onReset}>
         <div className="cost-filter filter">
           <label htmlFor="cost" className="label">
             Сортировать по цене
@@ -56,7 +73,6 @@ const View = ({ onChange, categories }: ViewProps) => {
           </label>
           <select name="category" id="category" className="rounded-t-md p-1">
             <option value="default">По умолчанию</option>
-
             {categories.map((item, i) => {
               return (
                 <option key={i} value={item}>
@@ -66,9 +82,14 @@ const View = ({ onChange, categories }: ViewProps) => {
             })}
           </select>
         </div>
-        <button className="btn" type="submit">
-          Искать
-        </button>
+        <div className="flex justify-between">
+          <button className="btn primary" type="submit">
+            Искать
+          </button>
+          <button className="btn secondary" type="reset">
+            Сбросить
+          </button>
+        </div>
       </form>
     </div>
   );

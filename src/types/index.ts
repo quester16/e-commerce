@@ -5,10 +5,11 @@ export interface CardProps {
   price: number;
   image: string;
   category?: string;
+  liked: boolean;
 }
 
 export type elements = {
-  cost?: {
+  price?: {
     value: string;
   };
   category?: {

@@ -20,15 +20,16 @@ const Favorite: FC = () => {
               title={item.title}
               price={item.price}
               image={item.image}
+              liked={item.liked}
             />
           ))
         ) : (
           <div className="w-full">
             <h4 className="text-lg font-mono font-medium text-center">
-              You haven't added any products yet!
+              Ты не выбрал товар, иди лайкни товар!
             </h4>
             <Link to={"/"}>
-              <button className="btn mx-auto">Back to shop!</button>
+              <button className="btn mx-auto secondary">Пойду добавлять</button>
             </Link>
           </div>
         )}

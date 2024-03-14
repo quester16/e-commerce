@@ -19,11 +19,11 @@ const Navbar: FC = () => {
         </ul>
         {isAuth ? (
           <Link to={"/profile"} className="w-fit">
-            <button className="btn ">Профиль</button>
+            <button className="btn primary">Профиль</button>
           </Link>
         ) : (
           <Link to={"/login"} className="w-fit">
-            <button className="btn ">Войти</button>
+            <button className="btn primary">Войти</button>
           </Link>
         )}
       </nav>

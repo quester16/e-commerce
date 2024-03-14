@@ -3,25 +3,29 @@ import { useAppSelector } from "../../hooks/typedReduxHooks.ts";
 
 const ProductsList = () => {
   const products = useAppSelector((state) => state.products.products);
-  const filters = useAppSelector((state) => state.filter.selectedFilter);
+  const { category, price } = useAppSelector(
+    (state) => state.filter.selectedFilter,
+  );
 
   const filteredProducts = () => {
-    return products;
+    const categoryFilter =
+      category === "default" || category === ""
+        ? products
+        : products.filter((item) => item.category === category);
+
+    return price === "default" || price === ""
+      ? categoryFilter
+      : price === "higher"
+        ? categoryFilter.slice().sort((a, b) => a.price - b.price)
+        : categoryFilter.slice().sort((a, b) => b.price - a.price);
   };
+
   const filteredProd = filteredProducts();
   return (
     <div className="flex flex-wrap w-[1000px] gap-3">
       {filteredProd &&
         filteredProd.map((item, i) => {
-          return (
-            <Card
-              key={i}
-              id={item.id}
-              title={item.title}
-              price={item.price}
-              image={item.image}
-            />
-          );
+          return <Card key={i} {...item} />;
         })}
     </div>
   );
