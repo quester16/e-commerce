@@ -1,24 +1,16 @@
-import { FC, FormEvent, useEffect } from "react";
+import { FC, FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
-import {
-  fetchCategoriesThunk,
-  getFilter,
-  toDefault,
-} from "../../store/slices/filterSlice.ts";
-import { elements } from "../../types";
+import { getFilter, toDefault } from "../../store/slices/filterSlice.ts";
+import { eventTargetElements } from "../../types";
 
 const Sidebar: FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector((state) => state.filter.categories);
-  useEffect(() => {
-    dispatch(fetchCategoriesThunk());
-    console.log("render");
-  }, [dispatch]);
 
   const onChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const target: EventTarget & elements = e.target;
+    const target: EventTarget & eventTargetElements = e.target;
 
     const elements = {
       price: target.price?.value,
@@ -28,8 +20,6 @@ const Sidebar: FC = () => {
   };
   const onReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // const target: EventTarget & elements = e.target;
 
     const elements = {
       price: "default",

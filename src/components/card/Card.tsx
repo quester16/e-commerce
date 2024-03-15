@@ -8,9 +8,9 @@ import {
 } from "../../store/slices/productSlice.ts";
 
 const Card: FC<CardProps> = (props) => {
-  const [like, setLike] = useState(false);
-
+  const [like, setLike] = useState(props.liked);
   const dispatch = useAppDispatch();
+
   const shortenTitle = (title: string) => {
     return title.length > 35 ? title.substring(0, 35) + "..." : title;
   };
@@ -18,8 +18,12 @@ const Card: FC<CardProps> = (props) => {
   const onLike = () => {
     setLike((prevState) => {
       prevState = !prevState;
+      const newLikedProd = {
+        ...props,
+        liked: prevState,
+      };
       prevState
-        ? dispatch(addFavorites(props))
+        ? dispatch(addFavorites(newLikedProd))
         : dispatch(removeFavorite(props.id));
       return prevState;
     });

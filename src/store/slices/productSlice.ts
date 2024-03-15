@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CardProps } from "../../types";
 
@@ -22,16 +22,24 @@ const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addFavorites: (state, action) => {
+    addFavorites: (state, action: PayloadAction<CardProps>) => {
       state.favorites.push(action.payload);
+      state.products.map((item) => {
+        item.id === action.payload.id
+          ? (item.liked = action.payload.liked)
+          : item;
+      });
       state.favorites = state.favorites.filter(
         (item, i, arr) => arr.findIndex((p) => p.id === item.id) === i,
       );
     },
-    removeFavorite: (state, action) => {
+    removeFavorite: (state, action: PayloadAction<number>) => {
       state.favorites = state.favorites.filter(
         (item) => item.id !== action.payload,
       );
+      state.products.map((item) => {
+        item.id === action.payload ? (item.liked = false) : item;
+      });
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +68,7 @@ export const fetchProducts = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`https://fakestoreapi.com/products`);
-      response.data.map((item) => (item.liked = false));
+      response.data.map((item: CardProps) => (item.liked = false));
       return response.data;
     } catch (e) {
       console.log(e);

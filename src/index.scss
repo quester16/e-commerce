@@ -62,3 +62,20 @@ input{
         margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
     }
 }
+
+.svg-icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: #4691f6;
+}
+
+.svg-icon circle {
+    stroke: #4691f6;
+    stroke-width: 1;
+}

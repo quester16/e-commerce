@@ -8,7 +8,7 @@ export interface CardProps {
   liked: boolean;
 }
 
-export type elements = {
+export type eventTargetElements = {
   price?: {
     value: string;
   };

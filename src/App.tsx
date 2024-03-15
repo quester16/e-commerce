@@ -8,6 +8,7 @@ import Login from "./pages/auth/login.tsx";
 import Profile from "./pages/profile.tsx";
 import { RequireAuth } from "./components/privateRoute/RequireAuth.tsx";
 import Favorite from "./pages/Favorite.tsx";
+import Cart from "./pages/Cart.tsx";
 
 const App: FC = () => {
   useEffect(() => {}, []);
@@ -22,6 +23,7 @@ const App: FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/favorite" element={<Favorite />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route
