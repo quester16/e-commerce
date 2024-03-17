@@ -8,13 +8,10 @@ import Login from "./pages/auth/login.tsx";
 import Profile from "./pages/profile.tsx";
 import { RequireAuth } from "./components/privateRoute/RequireAuth.tsx";
 import Favorite from "./pages/Favorite.tsx";
-import Cart from "./pages/Cart.tsx";
+import Cart from "./pages/cart/Cart.tsx";
 
 const App: FC = () => {
   useEffect(() => {}, []);
-
-  // todo: complete favorite page and cart page
-  // todo: make database for authed users, for favorite and cart state
 
   return (
     <>

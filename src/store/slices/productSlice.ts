@@ -6,7 +6,7 @@ interface productState {
   loading: boolean;
   error: boolean;
   products: CardProps[];
-  toCart: [];
+  toCart: CardProps[];
   favorites: CardProps[];
 }
 
@@ -41,6 +41,16 @@ const productSlice = createSlice({
         item.id === action.payload ? (item.liked = false) : item;
       });
     },
+    // for cart //
+    addToCart: (state, action: PayloadAction<CardProps>) => {
+      state.toCart.push(action.payload);
+      state.toCart = state.toCart.filter(
+        (item, i, arr) => arr.findIndex((p) => p.id === item.id) === i,
+      );
+    },
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      state.toCart = state.toCart.filter((item) => item.id !== action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +71,8 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { addFavorites, removeFavorite } = productSlice.actions;
+export const { addFavorites, removeFavorite, addToCart, removeFromCart } =
+  productSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
