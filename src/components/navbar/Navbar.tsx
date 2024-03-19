@@ -36,7 +36,7 @@ const Navbar: FC = () => {
           </Link>
         ) : (
           <Link to={"/login"} className="w-fit">
-            <button className="btn primary">Войти</button>
+            <button className="btn hover:bg-blue-300">Войти</button>
           </Link>
         )}
       </nav>

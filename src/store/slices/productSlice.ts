@@ -79,7 +79,9 @@ export const fetchProducts = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`https://fakestoreapi.com/products`);
-      response.data.map((item: CardProps) => (item.liked = false));
+      response.data.map((item: CardProps) => {
+        (item.liked = false), (item.amount = 1);
+      });
       return response.data;
     } catch (e) {
       console.log(e);

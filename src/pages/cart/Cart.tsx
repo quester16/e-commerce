@@ -2,6 +2,7 @@ import { FC } from "react";
 import CartItem from "./CartItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
 import { removeFromCart } from "../../store/slices/productSlice.ts";
+import { Link } from "react-router-dom";
 
 const Cart: FC = () => {
   const cartItems = useAppSelector((state) => state.products.toCart);
@@ -20,7 +21,14 @@ const Cart: FC = () => {
       <div className="order ">order</div>
     </div>
   ) : (
-    "hwel"
+    <div className="w-full">
+      <h4 className="text-lg font-mono font-medium text-center">
+        Ты нище брод? Иди купи товар!
+      </h4>
+      <Link to={"/"}>
+        <button className="btn mx-auto secondary">Пойду покупать</button>
+      </Link>
+    </div>
   );
 };
 

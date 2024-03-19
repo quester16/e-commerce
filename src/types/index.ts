@@ -6,6 +6,7 @@ export interface CardProps {
   image: string;
   category?: string;
   liked: boolean;
+  amount: number;
 }
 
 export type eventTargetElements = {

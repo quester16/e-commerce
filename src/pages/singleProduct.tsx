@@ -1,7 +1,72 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/typedReduxHooks.ts";
+import { useParams } from "react-router-dom";
+import { addToCart } from "../store/slices/productSlice.ts";
+import { CardProps } from "../types";
 
 const SingleProduct: FC = () => {
-  return <h1>singleProduct </h1>;
+  const params = useParams();
+  const dispatch = useAppDispatch();
+
+  const products = useAppSelector((state) => state.products.products);
+  const item = products.filter((item) =>
+    params.id ? item.id === +params.id : item,
+  );
+  const [{ description, price, image, title, id, liked, category }] = item;
+
+  const [amount, setAmount] = useState(1);
+  const onSetAmount = (type: string) => {
+    type === "inc"
+      ? setAmount(amount + 1)
+      : setAmount((amount) => {
+          if (amount <= 1) return 1;
+          return amount - 1;
+        });
+  };
+
+  const toBuy = () => {
+    const newItem: CardProps = {
+      description,
+      image,
+      liked,
+      price,
+      id,
+      title,
+      category,
+      amount: amount * price,
+    };
+    dispatch(addToCart({ ...newItem }));
+  };
+
+  return (
+    <div className="flex p-2">
+      <div className="img p-1  mr-10 box-border w-[352px]">
+        <img src={image} alt={title} className="object-contain" />
+      </div>
+      <div className="details w-[833px]">
+        <div className="title text-4xl mb-5">{title}</div>
+        <div className="price text-2xl mb-10">
+          <div>Цена - {Math.floor(price * amount)} сум</div>
+          <div id="num" className="flex items-center">
+            <button className="dec btn" onClick={() => onSetAmount("dec")}>
+              &#45;
+            </button>
+            <div className="amount text-2xl">{amount <= 1 ? 1 : amount}</div>
+            <button className="inc btn" onClick={() => onSetAmount("inc")}>
+              &#43;
+            </button>
+          </div>
+        </div>
+        <div className="desc text-lg mb-5">
+          <p className="underline">Описание</p>
+          {description}
+        </div>
+        <button className="btn primary" onClick={toBuy}>
+          купить
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default SingleProduct;

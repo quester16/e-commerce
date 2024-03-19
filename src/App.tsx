@@ -18,8 +18,8 @@ const App: FC = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/favorite" element={<Favorite />} />
+        <Route path="/products/:id" element={<SingleProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

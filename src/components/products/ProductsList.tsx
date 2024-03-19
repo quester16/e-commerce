@@ -25,7 +25,7 @@ const ProductsList = () => {
     <div className="flex flex-wrap w-[1000px] gap-3">
       {filteredProd &&
         filteredProd.map((item, i) => {
-          return <Card key={i} {...item} />;
+          return <Card key={item.id} {...item} />;
         })}
     </div>
   );

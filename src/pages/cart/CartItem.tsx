@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { CardProps } from "../../types";
+import { Link } from "react-router-dom";
 
 interface CartItemProps {
   item: CardProps;
@@ -11,12 +12,13 @@ const CartItem: FC<CartItemProps> = (props) => {
   const [amount, setAmount] = useState(1);
 
   const onSetAmount = (type: string) => {
-    type === "inc"
-      ? setAmount(amount + 1)
-      : setAmount((amount) => {
-          if (amount <= 1) return 1;
-          return amount - 1;
-        });
+    if (type === "inc") {
+      setAmount(amount + 1);
+    } else
+      setAmount((amount) => {
+        if (amount <= 1) return 1;
+        return amount - 1;
+      });
   };
   return (
     <div
@@ -30,7 +32,12 @@ const CartItem: FC<CartItemProps> = (props) => {
       <div className="cart-details w-3/4">
         <div className="w-full">
           <div className="flex justify-between mb-5">
-            <div>{item.title}</div>
+            <Link
+              to={"/products/" + item.id}
+              className="hover:text-gray-500 transition-colors"
+            >
+              <div>{item.title}</div>
+            </Link>
             <div className="delete ">
               <button
                 className="btn bg-red-500"
@@ -55,7 +62,7 @@ const CartItem: FC<CartItemProps> = (props) => {
             <label htmlFor="num">Единица {item.price}</label>
           </div>
           <div className="total">
-            <div className="text-2xl">{amount * item.price}</div>
+            <div className="text-2xl">{Math.floor(amount * item.price)}</div>
           </div>
         </div>
       </div>

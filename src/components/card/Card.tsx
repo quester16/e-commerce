@@ -7,6 +7,7 @@ import {
   addToCart,
   removeFavorite,
 } from "../../store/slices/productSlice.ts";
+import { Link } from "react-router-dom";
 
 const Card: FC<CardProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ type ViewProps = {
 };
 
 const View = ({ props, shortenTitle, like, onLike, addCart }: ViewProps) => {
-  const { title, image, price } = props;
+  const { title, image, price, id } = props;
   return (
     <div className="relative w-[233px] h-[400px] bg-blue-100 rounded-md">
       <div
@@ -71,12 +72,16 @@ const View = ({ props, shortenTitle, like, onLike, addCart }: ViewProps) => {
           />
         </svg>
       </div>
-      <div className="img w-full h-[290px] rounded-t-md pt-6">
-        <img src={image} alt={title} />
-      </div>
-      <div className="title font-normal h-12 p-1">{shortenTitle(title)}</div>
+      <Link to={"/products/" + id}>
+        <div className="img w-full h-[290px] rounded-t-md pt-6">
+          <img src={image} alt={title} />
+        </div>
+        <div className="title font-normal h-12 p-1">{shortenTitle(title)}</div>
+      </Link>
       <div className="flex justify-between items-center p-1">
-        <div className="cost font-semibold underline mt-2">{price}$</div>
+        <div className="cost font-semibold underline mt-2">
+          {Math.floor(price)} сум
+        </div>
         <div
           className="badge-toCart w-8 h-8 rounded-md cursor-pointer bg-blue-300 hover:bg-blue-400 transition-colors ease-in"
           onClick={addCart}
