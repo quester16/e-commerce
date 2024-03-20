@@ -14,17 +14,21 @@ const SingleProduct: FC = () => {
   );
   const [{ description, price, image, title, id, liked, category }] = item;
 
-  const [amount, setAmount] = useState(1);
+  const [itemAmount, setAmount] = useState(1);
   const onSetAmount = (type: string) => {
-    type === "inc"
-      ? setAmount(amount + 1)
-      : setAmount((amount) => {
-          if (amount <= 1) return 1;
-          return amount - 1;
-        });
+    if (type === "inc") {
+      setAmount((amount) => {
+        return amount + 1;
+      });
+    } else
+      setAmount((amount) => {
+        if (amount <= 1) return 1;
+        return amount - 1;
+      });
   };
 
   const toBuy = () => {
+    console.log(itemAmount);
     const newItem: CardProps = {
       description,
       image,
@@ -33,7 +37,7 @@ const SingleProduct: FC = () => {
       id,
       title,
       category,
-      amount: amount * price,
+      amount: itemAmount,
     };
     dispatch(addToCart({ ...newItem }));
   };
@@ -46,12 +50,14 @@ const SingleProduct: FC = () => {
       <div className="details w-[833px]">
         <div className="title text-4xl mb-5">{title}</div>
         <div className="price text-2xl mb-10">
-          <div>Цена - {Math.floor(price * amount)} сум</div>
+          <div>Цена - {Math.floor(price * itemAmount)} сум</div>
           <div id="num" className="flex items-center">
             <button className="dec btn" onClick={() => onSetAmount("dec")}>
               &#45;
             </button>
-            <div className="amount text-2xl">{amount <= 1 ? 1 : amount}</div>
+            <div className="amount text-2xl">
+              {itemAmount <= 1 ? 1 : itemAmount}
+            </div>
             <button className="inc btn" onClick={() => onSetAmount("inc")}>
               &#43;
             </button>

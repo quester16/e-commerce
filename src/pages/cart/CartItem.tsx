@@ -1,6 +1,8 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { CardProps } from "../../types";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/typedReduxHooks.ts";
+import { changeAmount } from "../../store/slices/productSlice.ts";
 
 interface CartItemProps {
   item: CardProps;
@@ -9,17 +11,18 @@ interface CartItemProps {
 const CartItem: FC<CartItemProps> = (props) => {
   const { item, toDelete } = props;
 
-  const [amount, setAmount] = useState(1);
+  const dispatch = useAppDispatch();
+  let amount = item.amount;
 
   const onSetAmount = (type: string) => {
     if (type === "inc") {
-      setAmount(amount + 1);
-    } else
-      setAmount((amount) => {
-        if (amount <= 1) return 1;
-        return amount - 1;
-      });
+      dispatch(changeAmount({ amount: amount + 1, id: item.id }));
+      return (amount = amount + 1);
+    } else if (amount <= 1) return (amount = 1);
+    dispatch(changeAmount({ amount: amount - 1, id: item.id }));
+    return (amount = amount - 1);
   };
+
   return (
     <div
       key={item.id}
@@ -54,15 +57,17 @@ const CartItem: FC<CartItemProps> = (props) => {
               <button className="inc btn" onClick={() => onSetAmount("inc")}>
                 &#43;
               </button>
-              <div className="amount text-2xl">{amount <= 1 ? 1 : amount}</div>
+              <div className="amount text-2xl">{item.amount}</div>
               <button className="dec btn" onClick={() => onSetAmount("dec")}>
                 &#45;
               </button>
             </div>
-            <label htmlFor="num">Единица {item.price}</label>
+            <label htmlFor="num">Единица {Math.floor(item.price)} сум</label>
           </div>
           <div className="total">
-            <div className="text-2xl">{Math.floor(amount * item.price)}</div>
+            <div className="text-2xl">
+              {Math.floor(amount * item.price)} сум
+            </div>
           </div>
         </div>
       </div>

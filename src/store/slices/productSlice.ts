@@ -51,6 +51,16 @@ const productSlice = createSlice({
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.toCart = state.toCart.filter((item) => item.id !== action.payload);
     },
+    changeAmount: (
+      state,
+      action: PayloadAction<{ amount: number; id: number }>,
+    ) => {
+      state.toCart = state.toCart.map((item) => {
+        if (item.id === action.payload.id)
+          return { ...item, amount: action.payload.amount };
+        else return item;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,8 +81,13 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { addFavorites, removeFavorite, addToCart, removeFromCart } =
-  productSlice.actions;
+export const {
+  addFavorites,
+  removeFavorite,
+  changeAmount,
+  addToCart,
+  removeFromCart,
+} = productSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",

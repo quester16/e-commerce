@@ -16,7 +16,7 @@ const Profile: FC = () => {
     <div className="rounded-md bg-amber-100 w-80 p-2 relative">
       <h1 className="text-3xl font-medium">Профиль</h1>
       <h3 className="text-lg">{email}</h3>
-      <button className="btn right-0" onClick={onLogOut}>
+      <button className="btn right-0 secondary" onClick={onLogOut}>
         Выйти
       </button>
     </div>

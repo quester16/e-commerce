@@ -138,7 +138,11 @@ const withAuth = <P extends object>(
                   />
                 </div>
               )}
-              <button type="submit" className=" btn " style={{ width: "100%" }}>
+              <button
+                type="submit"
+                className=" btn hover:bg-blue-300"
+                style={{ width: "100%" }}
+              >
                 {type === "login" ? "Войти" : "Регистрация"}
               </button>
             </form>
