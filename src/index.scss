@@ -61,15 +61,30 @@ input{
     display: inline-block;
     width: 25px;
     height: 25px;
+
+    & path,
+    & polygon,
+    & rect {
+        fill: #4691f6;
+    }
+    & circle {
+        stroke: #4691f6;
+        stroke-width: 1;
+    }
 }
 
-.svg-icon path,
-.svg-icon polygon,
-.svg-icon rect {
-    fill: #4691f6;
-}
+.red{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
 
-.svg-icon circle {
-    stroke: #4691f6;
-    stroke-width: 1;
+    & path,
+    & polygon,
+    & rect {
+        fill: red;
+    }
+    & circle {
+        stroke: #4691f6;
+        stroke-width: 1;
+    }
 }

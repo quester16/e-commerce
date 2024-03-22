@@ -1,11 +1,12 @@
 import { FC } from "react";
 import CartItem from "./CartItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
-import { removeFromCart } from "../../store/slices/productSlice.ts";
+import { makeOrder, removeFromCart } from "../../store/slices/productSlice.ts";
 import { Link } from "react-router-dom";
 
 const Cart: FC = () => {
   const cartItems = useAppSelector((state) => state.products.toCart);
+  const order = useAppSelector((state) => state.products.makeOrder);
   const dispatch = useAppDispatch();
 
   const totalSum = cartItems.reduce(
@@ -13,7 +14,8 @@ const Cart: FC = () => {
     0,
   );
   const toDelete = (id: number) => dispatch(removeFromCart(id));
-  return cartItems.length ? (
+
+  return cartItems.length && !order ? (
     <div className="w-full flex justify-between">
       <div className="h-full flex-col w-[800px]">
         {cartItems.map((item) => {
@@ -33,11 +35,23 @@ const Cart: FC = () => {
             <div>Итого</div>
             <div className="font-bold text-lg">{Math.floor(totalSum)} сум</div>
           </div>
-          <button className="btn primary" style={{ width: "100%" }}>
+          <button
+            className="btn primary"
+            style={{ width: "100%" }}
+            onClick={() => {
+              // post в БД //
+              console.log("Ваш заказ:", cartItems);
+              dispatch(makeOrder());
+            }}
+          >
             Заказать
           </button>
         </div>
       </div>
+    </div>
+  ) : order ? (
+    <div className="text-center p-1 bg-blue-300 rounded-md w-80 mx-auto mt-20">
+      Ваш заказ принят!
     </div>
   ) : (
     <div className="w-full mt-24">

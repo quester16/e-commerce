@@ -8,6 +8,7 @@ interface productState {
   products: CardProps[];
   toCart: CardProps[];
   favorites: CardProps[];
+  makeOrder: boolean;
 }
 
 const initialState: productState = {
@@ -16,6 +17,7 @@ const initialState: productState = {
   products: [],
   toCart: [],
   favorites: [],
+  makeOrder: false,
 };
 
 const productSlice = createSlice({
@@ -43,6 +45,7 @@ const productSlice = createSlice({
     },
     // for cart //
     addToCart: (state, action: PayloadAction<CardProps>) => {
+      state.makeOrder = false;
       state.toCart.push(action.payload);
       state.toCart = state.toCart.filter(
         (item, i, arr) => arr.findIndex((p) => p.id === item.id) === i,
@@ -60,6 +63,10 @@ const productSlice = createSlice({
           return { ...item, amount: action.payload.amount };
         else return item;
       });
+    },
+    makeOrder: (state) => {
+      state.makeOrder = true;
+      state.toCart = [];
     },
   },
   extraReducers: (builder) => {
@@ -87,19 +94,21 @@ export const {
   changeAmount,
   addToCart,
   removeFromCart,
+  makeOrder,
 } = productSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    try {
-      const response = await axios.get(`https://fakestoreapi.com/products`);
-      response.data.map((item: CardProps) => {
-        (item.liked = false), (item.amount = 1);
-      });
-      return response.data;
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    const response = await axios.get(`https://fakestoreapi.com/products`);
+    response.data.map((item: CardProps) => {
+      (item.liked = false), (item.amount = 1);
+    });
+    return response.data;
+    // } catch (e) {
+    //
+    //   console.log(e);
+    // }
   },
 );
