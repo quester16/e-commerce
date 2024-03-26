@@ -1,6 +1,6 @@
-import Card from "../card/Card.tsx";
+import CardItem from "../card/CardItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
-import SkeletonCart from "../card/SkeletonCart.tsx";
+import SkeletonCardItem from "../card/SkeletonCardItem.tsx";
 import { useEffect } from "react";
 import { fetchProducts } from "../../store/slices/productSlice.ts";
 import ErrorBoundaries from "../errorBoundaries/ErrorBoundaries.tsx";
@@ -18,9 +18,6 @@ const ProductsList = () => {
   useEffect(() => {
     products.length <= 0 ? dispatch(fetchProducts()) : void 0;
   }, [dispatch, products.length]);
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, [dispatch]);
 
   const filteredProducts = () => {
     const categoryFilter =
@@ -37,7 +34,7 @@ const ProductsList = () => {
 
   const filteredProd = filteredProducts();
   const onError = error ? <ErrorBoundaries /> : null;
-  const onLoading = loading ? <SkeletonCart /> : null;
+  const onLoading = loading ? <SkeletonCardItem /> : null;
 
   return (
     <div className="flex flex-wrap w-[1000px] gap-3">
@@ -45,7 +42,7 @@ const ProductsList = () => {
       {onLoading}
       {filteredProd && !(error && loading)
         ? filteredProd.map((item) => {
-            return <Card key={item.id} {...item} />;
+            return <CardItem key={item.id} {...item} />;
           })
         : null}
     </div>

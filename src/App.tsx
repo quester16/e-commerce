@@ -9,9 +9,22 @@ import Profile from "./pages/profile.tsx";
 import { RequireAuth } from "./components/privateRoute/RequireAuth.tsx";
 import Favorite from "./pages/Favorite.tsx";
 import Cart from "./pages/cart/Cart.tsx";
+import axios from "axios";
 
 const App: FC = () => {
-  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   axios
+  //     .post("https://6418782c29e7e36438e98817.mockapi.io/comments", {
+  //       name: "burhon",
+  //       item: "Mens Cotton Jacket",
+  //       text: "very good quality",
+  //       createdAt: new Date(),
+  //       id: 1,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     });
+  // }, []);
 
   return (
     <>

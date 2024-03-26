@@ -9,7 +9,7 @@ import {
 } from "../../store/slices/productSlice.ts";
 import { Link } from "react-router-dom";
 
-const Card: FC<CardProps> = (props) => {
+const CardItem: FC<CardProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const shortenTitle = (title: string) => {
@@ -38,7 +38,7 @@ const Card: FC<CardProps> = (props) => {
   );
 };
 
-export default Card;
+export default CardItem;
 
 type ViewProps = {
   props: CardProps;

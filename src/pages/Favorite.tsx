@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Card from "../components/card/Card.tsx";
+import CardItem from "../components/card/CardItem.tsx";
 import { useAppSelector } from "../hooks/typedReduxHooks.ts";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const Favorite: FC = () => {
       <div className="flex flex-wrap w-[1000px] gap-3 mx-auto">
         {favorites.length ? (
           favorites.map((item) => {
-            return <Card key={item.id} {...item} />;
+            return <CardItem key={item.id} {...item} />;
           })
         ) : (
           <div className="w-full mt-24">

@@ -17,3 +17,11 @@ export type eventTargetElements = {
     value: string;
   };
 };
+
+export type comments = {
+  createdAt: string;
+  name: string;
+  text: string;
+  item: string;
+  id: string;
+};

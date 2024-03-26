@@ -57,6 +57,26 @@ input{
 
 }
 
+textarea {
+    width: 100%;
+    min-height: 50px; /* Минимальная высота */
+    resize: none; /* Запрещаем изменение размеров */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    overflow: hidden;
+}
+
+textarea:focus {
+    border-color: dodgerblue;
+}
+
+
+
+
+
 .svg-icon {
     display: inline-block;
     width: 25px;

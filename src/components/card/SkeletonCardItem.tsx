@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const SkeletonCart: FC = () => {
+const SkeletonCardItem: FC = () => {
   return (
     <>
       <div className="w-[233px] h-[400px] bg-gray-100 rounded-md p-3">
@@ -55,4 +55,4 @@ const SkeletonCart: FC = () => {
   );
 };
 
-export default SkeletonCart;
+export default SkeletonCardItem;
