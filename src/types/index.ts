@@ -18,10 +18,9 @@ export type eventTargetElements = {
   };
 };
 
-export type comments = {
+export interface IComments {
   createdAt: string;
   name: string;
   text: string;
   item: string;
-  id: string;
-};
+}

@@ -1,7 +1,13 @@
-import { ChangeEvent, FC, useRef, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth.ts";
 import axios from "axios";
-import { comments } from "../../types";
+import { IComments } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
+import {
+  addToComments,
+  fetchCommentsThunk,
+} from "../../store/slices/authSlice.ts";
+import ErrorBoundaries from "../errorBoundaries/ErrorBoundaries.tsx";
 
 // todo: надо сделать через использования redux чтобы автоматически отображались комментарий
 
@@ -9,16 +15,14 @@ interface CommentsProps {
   item: string;
 }
 const Comments: FC<CommentsProps> = (props) => {
-  const comments = useRef<comments[] | undefined>(undefined);
+  const dispatch = useAppDispatch();
+  const { comments, commentLoading, commentError } = useAppSelector(
+    (state) => state.auth,
+  );
 
-  (async function () {
-    await axios
-      .get("https://6418782c29e7e36438e98817.mockapi.io/comments")
-      .then((res) => {
-        comments.current = res.data;
-        console.log(res.data);
-      });
-  })();
+  useEffect(() => {
+    comments.length <= 0 ? dispatch(fetchCommentsThunk()) : null;
+  }, [dispatch, comments.length]);
 
   const { isAuth, email } = useAuth();
   const [height, setHeight] = useState("50px");
@@ -56,12 +60,13 @@ const Comments: FC<CommentsProps> = (props) => {
     e.preventDefault();
     const textareaValue = e.target[0] as HTMLFormElement;
 
-    const newComment = {
-      createdAt: new Date(),
-      name: email,
+    const newComment: IComments = {
+      createdAt: new Date().toUTCString(),
+      name: email ? email : "",
       text: textareaValue.value,
       item: props.item,
     };
+    dispatch(addToComments(newComment));
     axios
       .post("https://6418782c29e7e36438e98817.mockapi.io/comments", newComment)
       .then((res) => console.log(res));
@@ -70,7 +75,7 @@ const Comments: FC<CommentsProps> = (props) => {
   };
 
   const render = () => {
-    return comments.current?.map((item: comments) => {
+    return comments.map((item: IComments) => {
       console.log(item.createdAt);
       console.log("working");
       if (item.item.trim() === props.item.trim()) {
@@ -90,6 +95,11 @@ const Comments: FC<CommentsProps> = (props) => {
     });
   };
 
+  const loading = commentLoading ? (
+    <p className="text-center font-semibold">Loading...</p>
+  ) : null;
+  const error = commentError ? <ErrorBoundaries /> : null;
+  const content = !(error && loading) ? render() : null;
   return (
     <div className="w-full bg-gray-200 rounded-md p-2">
       <div className="leave-comments  mb-5 ">
@@ -108,11 +118,15 @@ const Comments: FC<CommentsProps> = (props) => {
           </form>
         ) : (
           <div className="text-center bg-red-300 p-2 rounded-md">
-            Войдите чтобы оставлять комментарий
+            Войдите чтобы оставить комментарий
           </div>
         )}
       </div>
-      <div className="comments">{render()}</div>
+      <div className="comments">
+        {loading}
+        {error}
+        {content}
+      </div>
     </div>
   );
 };

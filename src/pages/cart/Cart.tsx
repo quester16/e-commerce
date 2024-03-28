@@ -3,10 +3,12 @@ import CartItem from "./CartItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/typedReduxHooks.ts";
 import { makeOrder, removeFromCart } from "../../store/slices/productSlice.ts";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.ts";
 
 const Cart: FC = () => {
   const cartItems = useAppSelector((state) => state.products.toCart);
   const order = useAppSelector((state) => state.products.makeOrder);
+  const { isAuth } = useAuth();
   const dispatch = useAppDispatch();
 
   const totalSum = cartItems.reduce(
@@ -35,17 +37,23 @@ const Cart: FC = () => {
             <div>Итого</div>
             <div className="font-bold text-lg">{Math.floor(totalSum)} сум</div>
           </div>
-          <button
-            className="btn primary"
-            style={{ width: "100%" }}
-            onClick={() => {
-              // post в БД //
-              console.log("Ваш заказ:", cartItems);
-              dispatch(makeOrder());
-            }}
-          >
-            Заказать
-          </button>
+          {isAuth ? (
+            <button
+              className="btn primary"
+              style={{ width: "100%" }}
+              onClick={() => {
+                // post в БД //
+                console.log("Ваш заказ:", cartItems);
+                dispatch(makeOrder());
+              }}
+            >
+              Заказать
+            </button>
+          ) : (
+            <p className="font-semibold p-2 rounded-md bg-gray-200 text-center">
+              Войдите чтобы оформить ваш заказ
+            </p>
+          )}
         </div>
       </div>
     </div>
