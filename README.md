@@ -32,7 +32,12 @@
 npm init vite@latest my-project
 # или
 yarn create vite my-project
-
+```
+```
+npm run dev
+# или
+yarn dev
+```
 ## Лицензия
 
 Этот проект распространяется под [лицензией MIT](LICENSE). Вы можете свободно использовать и изменять код для своих целей.
