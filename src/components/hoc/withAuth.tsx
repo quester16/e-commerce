@@ -150,6 +150,12 @@ const withAuth = <P extends object>(
               {type === "login" ? renderLink("login") : renderLink("signUp")}
             </div>
           </div>
+          <div>
+            для теста
+            <p>(test@gmail.com)</p>
+            <p>(12345678)</p>
+            также можно содздать несушествующий акк
+          </div>
         </>
       );
     };
