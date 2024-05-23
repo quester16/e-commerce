@@ -58,7 +58,6 @@ const View = ({ props, shortenTitle, like, onLike, addCart }: ViewProps) => {
       >
         <svg
           className="w-6 h-6 text-red-500 cart hover:text-red-300 transition-colors"
-          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill={like ? "red" : "none"}
           viewBox="0 0 24 24"

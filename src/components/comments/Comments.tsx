@@ -9,8 +9,6 @@ import {
 } from "../../store/slices/authSlice.ts";
 import ErrorBoundaries from "../errorBoundaries/ErrorBoundaries.tsx";
 
-// todo: надо сделать через использования redux чтобы автоматически отображались комментарий
-
 interface CommentsProps {
   item: string;
 }
@@ -29,8 +27,8 @@ const Comments: FC<CommentsProps> = (props) => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setHeight(event.target.scrollHeight + "px");
   };
-  function timeAgo(timestamp) {
-    const seconds = Math.floor((new Date() - timestamp) / 1000);
+  function timeAgo(timestamp: number | any) {
+    const seconds = Math.floor((+new Date() - timestamp) / 1000);
 
     let interval = Math.floor(seconds / 31536000);
 
@@ -75,15 +73,14 @@ const Comments: FC<CommentsProps> = (props) => {
   };
 
   const render = () => {
-    return comments.map((item: IComments) => {
+    return comments.map((item: IComments, i) => {
       console.log(item.createdAt);
       console.log("working");
       if (item.item.trim() === props.item.trim()) {
         return (
-          <div key={item.id} className="bg-gray-100 rounded-md mb-5 p-2">
+          <div key={i} className="bg-gray-100 rounded-md mb-5 p-2">
             <div className="flex items-baseline">
               <div className="font-medium mr-2">{item.name}</div>
-
               <div className="font-light">
                 {timeAgo(new Date(item.createdAt))}
               </div>

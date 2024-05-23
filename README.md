@@ -1,43 +1,30 @@
-# Веб-приложение e-commerce
+# React + TypeScript + Vite
 
-Это простое веб-приложение электронной коммерции, построенное с использованием React, Redux Toolkit, Firebase и различных других технологий. Оно позволяет пользователям просматривать продукты, применять фильтры, добавлять товары в корзину, оставлять комментарии и многое другое.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Функциональность
+Currently, two official plugins are available:
 
-- **Фильтр**: Пользователи могут фильтровать продукты по различным критериям, таким как категория, диапазон цен и т. д.
-- **Компоненты высшего порядка (HOC)**: Используются для управления аутентификацией и авторизацией пользователей.
-- **Firebase**: Интегрирован Firebase для аутентификации, базы данных в реальном времени и хостинга.
-- **Отложенная загрузка (Lazy Loading)**: Реализована отложенная загрузка для оптимизации производительности путем асинхронной загрузки компонентов.
-- **Границы ошибок (Error Boundaries)**: Реализованы границы ошибок для грациозной обработки ошибок и предотвращения полного сбоя приложения.
-- **Комментарии**: Пользователи могут оставлять комментарии и оценки товаров.
-- **Корзина**: Пользователи могут добавлять товары в корзину и переходить к оформлению заказа.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Используемые технологии
+## Expanding the ESLint configuration
 
-- **Tailwind CSS**: Использован для стилизации пользовательского интерфейса, обеспечивая адаптивный и современный дизайн.
-- **Typescript**: Применен TypeScript для статической типизации, обеспечивая лучшее качество кода и опыт разработчика.
-- **React & Redux Toolkit**: Приложение построено с использованием React для фронтенда и Redux Toolkit для управления состоянием, что делает его более масштабируемым и поддерживаемым.
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-# Начало работы с проектом на основе Vite
+- Configure the top-level `parserOptions` property like this:
 
-## 1. Установка Node.js и npm
-
-Убедитесь, что на вашем компьютере установлен Node.js и npm (пакетный менеджер для Node.js). Вы можете загрузить их с официального сайта Node.js: [nodejs.org](https://nodejs.org/).
-
-## 2. Создание нового проекта
-
-Создайте новый проект с использованием сборщика Vite с помощью npm или yarn. Запустите следующую команду в вашем терминале:
-
-```bash
-npm init vite@latest my-project
-# или
-yarn create vite my-project
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
 ```
-```
-npm run dev
-# или
-yarn dev
-```
-## Лицензия
 
-Этот проект распространяется под [лицензией MIT](LICENSE). Вы можете свободно использовать и изменять код для своих целей.
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
